@@ -48,6 +48,7 @@ RUN mkdir -p /etc/pki/tls/certs && mkdir -p /etc/pki/tls/private
 RUN cd /etc/pki/tls && openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
 
 #Configure listener for logstash-forwarder aka lumberjack
+ADD collectd-input.conf /etc/logstash/conf.d/collectd-input.conf
 ADD lumberjack-input.conf /etc/logstash/conf.d/lumberjack-input.conf
 ADD syslog-filter.conf /etc/logstash/conf.d/syslog-filter.conf
 ADD lumberjack-output.conf /etc/logstash/conf.d/lumberjack-output.conf
@@ -65,6 +66,11 @@ RUN cd /etc/init.d/ &&  chmod +x logstash-forwarder
 
 #Config
 ADD logstash-forwarder /etc/logstash-forwarder
+
+RUN apt-get install -y collectd collectd-utils
+ADD collectd.conf /etc/collectd/collectd.conf
+
+RUN apt-get install -y stress
 #### CLIENT-ONLY END ####
 
 #Bootstrap file
