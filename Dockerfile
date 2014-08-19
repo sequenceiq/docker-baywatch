@@ -34,7 +34,7 @@ RUN mkdir -p /usr/share/kibana3 && cp -R /root/kibana-3.0.1/* /usr/share/kibana3
 
 #Install Nginx for kibana
 RUN apt-get install -y nginx apache2-utils
-ADD nginx.conf /etc/nginx/sites-available/default
+ADD server/nginx.conf /etc/nginx/sites-available/default
 
 #Install Logstash
 RUN echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash.list
@@ -48,11 +48,12 @@ RUN mkdir -p /etc/pki/tls/certs && mkdir -p /etc/pki/tls/private
 RUN cd /etc/pki/tls && openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
 
 #Configure listener for logstash-forwarder aka lumberjack
-ADD collectd-input.conf /etc/logstash/conf.d/collectd-input.conf
-ADD lumberjack-input.conf /etc/logstash/conf.d/lumberjack-input.conf
-ADD syslog-filter.conf /etc/logstash/conf.d/syslog-filter.conf
-ADD lumberjack-output.conf /etc/logstash/conf.d/lumberjack-output.conf
-ADD nginx_access-filter.conf /etc/logstash/conf.d/nginx_access-filter.conf
+ADD server/input-logstash-forwarder.conf /etc/logstash/conf.d/input-logstash-forwarder.conf
+ADD server/input-collectd.conf /etc/logstash/conf.d/input-collectd.conf
+ADD server/filter-syslog.conf /etc/logstash/conf.d/filter-syslog.conf
+ADD server/filter-nginx_access.conf /etc/logstash/conf.d/filter-nginx_access.conf
+ADD server/output.conf /etc/logstash/conf.d/output.conf
+
 
 #### CLIENT-ONLY BEGIN ####
 #Setup logstash-forwarder client !!! DEMO ONLY !!! MOVE to CLIENT
@@ -61,14 +62,14 @@ RUN apt-get update && apt-get install -y logstash-forwarder
 
 #Add to initd
 #wget https://raw.github.com/elasticsearch/logstash-forwarder/master/logstash-forwarder.init
-ADD logstash-forwarder.init /etc/init.d/logstash-forwarder
+ADD client/logstash-forwarder.init /etc/init.d/logstash-forwarder
 RUN cd /etc/init.d/ &&  chmod +x logstash-forwarder
 
 #Config
-ADD logstash-forwarder /etc/logstash-forwarder
+ADD client/logstash-forwarder /etc/logstash-forwarder
 
 RUN apt-get install -y collectd collectd-utils
-ADD collectd.conf /etc/collectd/collectd.conf
+ADD client/collectd.conf /etc/collectd/collectd.conf
 
 RUN apt-get install -y stress
 #### CLIENT-ONLY END ####

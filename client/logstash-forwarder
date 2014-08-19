@@ -11,6 +11,12 @@
         "/var/log/nginx/*access*.log"
        ],
       "fields": { "type": "nginx_access" }
+    },
+    {
+      "paths": [
+        "/var/log/hadoop*.log"
+       ],
+      "fields": { "type": "hadoop" }
     }
    ]
 }
