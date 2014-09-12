@@ -43,40 +43,25 @@ RUN apt-get update && apt-get install -y logstash=1.4.2-1-2c0f5a1
 #Workaround regarding ulimit privileges
 RUN sed -i.bak '/set ulimit as/,+2 s/^/#/' /etc/init.d/logstash
 
-#Configure logstash
-RUN mkdir -p /etc/pki/tls/certs && mkdir -p /etc/pki/tls/private
-RUN cd /etc/pki/tls && openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
-
-#Configure listener for logstash-forwarder aka lumberjack
-ADD server/input-logstash-forwarder.conf /etc/logstash/conf.d/input-logstash-forwarder.conf
-ADD server/input-collectd.conf /etc/logstash/conf.d/input-collectd.conf
-ADD server/filter-syslog.conf /etc/logstash/conf.d/filter-syslog.conf
-ADD server/filter-nginx_access.conf /etc/logstash/conf.d/filter-nginx_access.conf
-ADD server/output.conf /etc/logstash/conf.d/output.conf
+#Configure Logstahs forwarder PKI (insecure)
+RUN mkdir -p /etc/pki
+ADD tls /etc/pki/tls
+#Auto generated key
+#RUN mkdir -p /etc/pki/tls/certs && mkdir -p /etc/pki/tls/private
+#RUN cd /etc/pki/tls && openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
 
 
-#### CLIENT-ONLY BEGIN ####
-#Setup logstash-forwarder client !!! DEMO ONLY !!! MOVE to CLIENT
-RUN echo 'deb http://packages.elasticsearch.org/logstashforwarder/debian stable main' | tee /etc/apt/sources.list.d/logstashforwarder.list
-RUN apt-get update && apt-get install -y logstash-forwarder
+#Configure Logstash INPUT
+ADD server/inputs/input-logstash-forwarder.conf /etc/logstash/conf.d/input-logstash-forwarder.conf
 
-#Add to initd
-#wget https://raw.github.com/elasticsearch/logstash-forwarder/master/logstash-forwarder.init
-ADD client/logstash-forwarder.init /etc/init.d/logstash-forwarder
-RUN cd /etc/init.d/ &&  chmod +x logstash-forwarder
+#Configure Logstash FILTER
+ADD server/filters/filter-serf.conf /etc/logstash/conf.d/filter-serf.conf
 
-#Config
-ADD client/logstash-forwarder /etc/logstash-forwarder
-
-RUN apt-get install -y collectd collectd-utils
-ADD client/collectd.conf /etc/collectd/collectd.conf
-
-RUN apt-get install -y stress
-#### CLIENT-ONLY END ####
+#Configure Logstash OUTPUT
+ADD server/outputs/es-output.conf /etc/logstash/conf.d/es-output.conf
 
 #Bootstrap file
 ADD bootstrap.sh /etc/bootstrap.sh
-RUN chown root:root /etc/bootstrap.sh
-RUN chmod 700 /etc/bootstrap.sh
+RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
 
 ENV BOOTSTRAP /etc/bootstrap.sh
