@@ -9,7 +9,8 @@ docker build --rm -t elk_ubu .
 
 ##Run
 ```
-docker run -p 9200:9200 -p 3080:80 -p 5000:5000 -i -t elk_ubu /etc/bootstrap.sh -bash
+docker run -p 9200:9200 -p 3080:80 -p 5000:5000 -p 25826:25826 -i -t elk_ubu /etc/bootstrap.sh -bash
+docker run -i -t --name elk_ubu --net=host elk_ubu /etc/bootstrap.sh -bash
 ```
 
 #Configure dashboard

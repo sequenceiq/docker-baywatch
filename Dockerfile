@@ -53,9 +53,11 @@ ADD tls /etc/pki/tls
 
 #Configure Logstash INPUT
 ADD server/inputs/input-logstash-forwarder.conf /etc/logstash/conf.d/input-logstash-forwarder.conf
+ADD server/inputs/input-collectd.conf /etc/logstash/conf.d/input-collectd.conf
 
 #Configure Logstash FILTER
 ADD server/filters/filter-serf.conf /etc/logstash/conf.d/filter-serf.conf
+ADD server/filters/filter-nginx_access.conf /etc/logstash/conf.d/filter-nginx_access.conf
 
 #Configure Logstash OUTPUT
 ADD server/outputs/es-output.conf /etc/logstash/conf.d/es-output.conf
@@ -63,5 +65,7 @@ ADD server/outputs/es-output.conf /etc/logstash/conf.d/es-output.conf
 #Bootstrap file
 ADD bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
+
+VOLUME /var/log
 
 ENV BOOTSTRAP /etc/bootstrap.sh
