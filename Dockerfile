@@ -36,32 +36,6 @@ RUN mkdir -p /usr/share/kibana3 && cp -R /root/kibana-3.0.1/* /usr/share/kibana3
 RUN apt-get install -y nginx apache2-utils
 ADD server/nginx.conf /etc/nginx/sites-available/default
 
-#Install Logstash
-RUN echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash.list
-RUN apt-get update && apt-get install -y logstash=1.4.2-1-2c0f5a1
-
-#Workaround regarding ulimit privileges
-RUN sed -i.bak '/set ulimit as/,+2 s/^/#/' /etc/init.d/logstash
-
-#Configure Logstahs forwarder PKI (insecure)
-RUN mkdir -p /etc/pki
-ADD tls /etc/pki/tls
-#Auto generated key
-#RUN mkdir -p /etc/pki/tls/certs && mkdir -p /etc/pki/tls/private
-#RUN cd /etc/pki/tls && openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
-
-
-#Configure Logstash INPUT
-ADD server/inputs/input-logstash-forwarder.conf /etc/logstash/conf.d/input-logstash-forwarder.conf
-ADD server/inputs/input-collectd.conf /etc/logstash/conf.d/input-collectd.conf
-
-#Configure Logstash FILTER
-ADD server/filters/filter-serf.conf /etc/logstash/conf.d/filter-serf.conf
-ADD server/filters/filter-nginx_access.conf /etc/logstash/conf.d/filter-nginx_access.conf
-
-#Configure Logstash OUTPUT
-ADD server/outputs/es-output.conf /etc/logstash/conf.d/es-output.conf
-
 #Bootstrap file
 ADD bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
