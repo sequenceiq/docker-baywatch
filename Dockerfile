@@ -40,6 +40,8 @@ ADD server/nginx.conf /etc/nginx/sites-available/default
 ADD bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
 
+ADD sample /var/log/hadoop
+
 VOLUME /var/log
 
 ENV BOOTSTRAP /etc/bootstrap.sh
