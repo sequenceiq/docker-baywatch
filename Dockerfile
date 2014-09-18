@@ -12,6 +12,7 @@ RUN add-apt-repository ppa:webupd8team/java -y
 RUN apt-get update
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 RUN apt-get install -y oracle-java7-installer
+RUN apt-get install -y git
 
 
 #Install Elasticsearch
@@ -31,6 +32,12 @@ RUN cd /usr/share/elasticsearch/bin && ./plugin -install royrusso/elasticsearch-
 #Install Kibana
 RUN cd /root && wget https://download.elasticsearch.org/kibana/kibana/kibana-3.0.1.tar.gz && tar xvf kibana-3.0.1.tar.gz
 RUN mkdir -p /usr/share/kibana3 && cp -R /root/kibana-3.0.1/* /usr/share/kibana3/
+
+#Install heatmap
+RUN cd /root && git clone https://github.com/ppi-ag/kibana-heatmap.git
+RUN cp -R /root/kibana-heatmap/heatmap /usr/share/kibana3/app/panels/
+RUN cp -R /root/kibana-heatmap/heatmap/vendor/* /usr/share/kibana3/vendor/
+RUN sed -i -e "s/histogram/heatmap','histogram/g" /usr/share/kibana3/config.js
 
 #Install Nginx for kibana
 RUN apt-get install -y nginx apache2-utils
