@@ -20,7 +20,9 @@ RUN wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key 
 RUN echo 'deb http://packages.elasticsearch.org/elasticsearch/1.1/debian stable main' | tee /etc/apt/sources.list.d/elasticsearch.list
 RUN apt-get update
 RUN apt-get -y install elasticsearch=1.1.1
-RUN echo "script.disable_dynamic: true" >> /etc/elasticsearch/elasticsearch.yml
+#RUN echo "script.disable_dynamic: true" >> /etc/elasticsearch/elasticsearch.yml
+ADD es/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
+
 #Workaround regarding ulimit privileges
 RUN sed -i.bak '/MAX_OPEN_FILES" ]; then/,+4 s/^/#/' /etc/init.d/elasticsearch
 RUN sed -i.bak '/MAX_LOCKED_MEMORY" ]; then/,+4 s/^/#/' /etc/init.d/elasticsearch
