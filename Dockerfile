@@ -33,6 +33,16 @@ RUN cd /usr/share/elasticsearch/bin && ./plugin -install royrusso/elasticsearch-
 RUN cd /root && wget https://download.elasticsearch.org/kibana/kibana/kibana-3.0.1.tar.gz && tar xvf kibana-3.0.1.tar.gz
 RUN mkdir -p /usr/share/kibana3 && cp -R /root/kibana-3.0.1/* /usr/share/kibana3/
 
+#Install Logstash
+RUN echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash.list
+RUN apt-get update && apt-get install -y logstash=1.4.2-1-2c0f5a1
+
+#Workaround regarding ulimit privileges
+RUN sed -i.bak '/set ulimit as/,+2 s/^/#/' /etc/init.d/logstash
+RUN sed -i.bak 's/args=\"/args=\"-verbose /' /etc/init.d/logstash
+RUN sed -i.bak 's/LS_USER=logstash/LS_USER=root/' /etc/init.d/logstash
+
+
 #Install heatmap
 RUN cd /root && git clone https://github.com/ppi-ag/kibana-heatmap.git
 RUN cp -R /root/kibana-heatmap/heatmap /usr/share/kibana3/app/panels/
