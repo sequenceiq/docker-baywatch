@@ -184,13 +184,13 @@
             "1w",
             "1y"
           ],
-          "lines": false,
+          "lines": true,
           "fill": 0,
           "linewidth": 3,
           "points": false,
           "pointradius": 5,
-          "bars": true,
-          "stack": true,
+          "bars": false,
+          "stack": false,
           "spyable": true,
           "zoomlinks": true,
           "options": true,
@@ -261,13 +261,13 @@
             "1w",
             "1y"
           ],
-          "lines": false,
+          "lines": true,
           "fill": 0,
           "linewidth": 3,
           "points": false,
           "pointradius": 5,
-          "bars": true,
-          "stack": true,
+          "bars": false,
+          "stack": false,
           "spyable": true,
           "zoomlinks": true,
           "options": true,
@@ -277,7 +277,7 @@
           "legend_counts": true,
           "timezone": "browser",
           "percentage": false,
-          "zerofill": true,
+          "zerofill": false,
           "derivative": false,
           "tooltip": {
             "value_type": "individual",
@@ -491,7 +491,7 @@
       "notice": false
     }
   ],
-  "editable": false,
+  "editable": true,
   "failover": false,
   "index": {
     "interval": "day",
@@ -499,7 +499,7 @@
     "default": "NO_TIME_FILTER_OR_INDEX_PATTERN_NOT_MATCHED",
     "warm_fields": true
   },
-  "style": "light",
+  "style": "dark",
   "panel_hints": true,
   "pulldowns": [
     {
@@ -526,7 +526,7 @@
     {
       "type": "filtering",
       "collapse": true,
-      "notice": false,
+      "notice": true,
       "enable": true
     }
   ],
