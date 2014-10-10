@@ -65,7 +65,7 @@ for file in fileList:
     with open("shipper-hadoop-metrics-" + f.name.replace(".out","") + ".conf", 'a') as the_file:
       result = 'input {\nfile {\n  type => "'
       result += f.name.replace(".out","")
-      result += '"\n    start_position => "beginning"\n    path => [ "/amb/log/hadoop-yarn/metrics/'
+      result += '"\n    start_position => "beginning"\n    path => [ "/amb/log/hadoop-metrics/'
       result += f.name.replace(".out","")
       result += '.out" ]\n  }\n}\nfilter {\n  if [type] == "'
       result += f.name.replace(".out","")
