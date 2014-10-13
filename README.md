@@ -21,7 +21,5 @@ We have put together a few sample dashboard, the the list is unlimited - you can
 
 * [System resources](https://github.com/sequenceiq/docker-baywatch/blob/master/dashboards/System%20Resources-1412352757038.json) dashboard
 
-https://github.com/sequenceiq/docker-baywatch/blob/master/dashboards/System%20Resources-1412352757038.json
-
 #Generate load
 stress --cpu 2 --timeout 60358
