@@ -9,7 +9,7 @@ docker pull sequenceiq/baywatch
 
 ##Run
 ```
-docker run -p 3080:80 -i -t baywatch /etc/bootstrap.sh -bash
+docker run -p 3080:80 -i -t sequenceiq/baywatch /etc/bootstrap.sh -bash
 ```
 
 #Configure dashboard
