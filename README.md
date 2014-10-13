@@ -16,9 +16,11 @@ docker run -p 3080:80 -i -t baywatch /etc/bootstrap.sh -bash
 #Configure dashboard
 
 Hadoop metrics
+
 https://github.com/sequenceiq/docker-baywatch/blob/master/dashboards/Hadoop%20Metrics-1412352733447.json
 
 System resources
+
 https://github.com/sequenceiq/docker-baywatch/blob/master/dashboards/System%20Resources-1412352757038.json
 
 #Generate load
