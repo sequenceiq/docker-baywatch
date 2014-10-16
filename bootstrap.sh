@@ -1,12 +1,16 @@
 #!/bin/bash
 : ${ES_DATA_PATH:="/var/lib/elasticsearch"}
+: ${ES_WORK_PATH:="/tmp/elasticsearch"}
 : ${ES_CLUSTER_NAME:="logstash-es"}
-: ${ES_UNICAST_HOSTS:=localhost}
+: ${ES_UNICAST_HOSTS:="localhost"}
 
 cat >> /etc/default/elasticsearch <<EOF
 
-# Data path to be a volume
+# Data path (intended to be used as a volume)
 export ES_DATA_PATH="$ES_DATA_PATH"
+
+# Work dir path (intended to be used as a volume)
+export ES_WORK_PATH="$ES_WORK_PATH"
 
 # The name of the cluster
 export ES_CLUSTER_NAME="$ES_CLUSTER_NAME"

@@ -158,6 +158,7 @@ path.data: ${ES_DATA_PATH}
 # Path to temporary files:
 #
 # path.work: /path/to/work
+path.work: ${ES_WORK_PATH}
 
 # Path to log files:
 #
