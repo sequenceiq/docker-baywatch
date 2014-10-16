@@ -3,6 +3,7 @@
 : ${ES_WORK_PATH:="/tmp/elasticsearch"}
 : ${ES_CLUSTER_NAME:="logstash-es"}
 : ${ES_UNICAST_HOSTS:="localhost"}
+: ${ES_MULTICAST_ENABLED:=false}
 
 cat >> /etc/default/elasticsearch <<EOF
 

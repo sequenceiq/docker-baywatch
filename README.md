@@ -14,7 +14,7 @@ To run the container with default settings:
 docker run -d -p 3080:80 sequenceiq/baywatch
 ```
 
-To use run the container with custom settings:
+To run the container with custom settings:
 
 ```
 docker run -d \
