@@ -15,10 +15,10 @@
 # effect of certain configuration option, please _do ask_ on the
 # mailing list or IRC channel [http://elasticsearch.org/community].
 
-# Any element in the configuration can be replaced with environment variables
-# by placing them in ${...} notation. For example:
-#
-# node.rack: ${RACK_ENV_VAR}
+  # Any element in the configuration can be replaced with environment variables
+  # by placing them in ${...} notation. For example:
+  #
+  # node.rack: ${RACK_ENV_VAR}
 
 # For information on supported formats and syntax for the config file, see
 # <http://elasticsearch.org/guide/en/elasticsearch/reference/current/setup-configuration.html>
@@ -29,7 +29,7 @@
 # Cluster name identifies your cluster for auto-discovery. If you're running
 # multiple clusters on the same network, make sure you're using unique names.
 #
-cluster.name: logstash-es
+cluster.name: ${ES_CLUSTER_NAME}
 
 
 #################################### Node #####################################
@@ -153,10 +153,12 @@ cluster.name: logstash-es
 # space on creation. For example:
 #
 # path.data: /path/to/data1,/path/to/data2
+path.data: ${ES_DATA_PATH}
 
 # Path to temporary files:
 #
 # path.work: /path/to/work
+path.work: ${ES_WORK_PATH}
 
 # Path to log files:
 #
@@ -319,11 +321,13 @@ cluster.name: logstash-es
 # 1. Disable multicast discovery (enabled by default):
 #
 # discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.multicast.enabled: ${ES_MULTICAST_ENABLED}
 #
 # 2. Configure an initial list of master nodes in the cluster
 #    to perform discovery when new nodes (master or data) are started:
 #
 # discovery.zen.ping.unicast.hosts: ["host1", "host2:port"]
+discovery.zen.ping.unicast.hosts: ${ES_UNICAST_HOSTS}
 
 # EC2 discovery allows to use AWS EC2 API in order to perform discovery.
 #

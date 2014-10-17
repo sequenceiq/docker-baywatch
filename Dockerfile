@@ -57,4 +57,6 @@ ADD sample /var/log/hadoop
 
 VOLUME /var/log
 
-ENV BOOTSTRAP /etc/bootstrap.sh
+ENTRYPOINT ["/etc/bootstrap.sh"]
+
+CMD ["-d"]
