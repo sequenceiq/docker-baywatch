@@ -19,6 +19,9 @@ export ES_CLUSTER_NAME="$ES_CLUSTER_NAME"
 # For cluster discovery
 export ES_UNICAST_HOSTS="$ES_UNICAST_HOSTS"
 
+# Enable/disable multicast
+export ES_MULTICAST_ENABLED="$ES_MULTICAST_ENABLED"
+
 EOF
 
 echo "Elasticsearch data path: $ES_DATA_PATH"
