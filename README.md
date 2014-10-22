@@ -1,6 +1,6 @@
 # Baywatch on Docker
 
-This image aims to provide monitoring functionality for Hadoop Clusters.
+This image aims to provide monitoring functionality for Hadoop Clusters. For reference check this [blog post](http://blog.sequenceiq.com/blog/2014/10/07/hadoop-monitoring/).
 
 ##Pull the container
 ```
