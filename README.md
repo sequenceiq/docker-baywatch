@@ -36,7 +36,7 @@ docker run -it -p 3080:80 sequenceiq/baywatch -bash
 
 #Configure dashboard
 
-We have put together a few sample dashboard, the the list is unlimited - you can build your own dashboard based on the properties we collect.
+We have put together a few sample dashboard, the list is unlimited - you can build your own dashboard based on the properties we collect.
 
 * [Hadoop metrics](https://github.com/sequenceiq/docker-baywatch/blob/master/dashboards/Hadoop%20Metrics-1412352733447.json) dashboard
 
