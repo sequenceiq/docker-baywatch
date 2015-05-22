@@ -4,6 +4,7 @@
 : ${ES_CLUSTER_NAME:="logstash-es"}
 : ${ES_UNICAST_HOSTS:="localhost"}
 : ${ES_MULTICAST_ENABLED:=false}
+: ${ES_NODE_NAME:="baywatch-node-1"}
 
 cat >> /etc/default/elasticsearch <<EOF
 
@@ -21,6 +22,9 @@ export ES_UNICAST_HOSTS="$ES_UNICAST_HOSTS"
 
 # Enable/disable multicast
 export ES_MULTICAST_ENABLED="$ES_MULTICAST_ENABLED"
+
+# Default node name
+export ES_NODE_NAME="$ES_NODE_NAME"
 
 EOF
 
