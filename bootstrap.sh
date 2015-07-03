@@ -28,6 +28,9 @@ export ES_NODE_NAME="$ES_NODE_NAME"
 
 EOF
 
+# set permission for es-data
+chmod 777 /es-data
+
 echo "Elasticsearch data path: $ES_DATA_PATH"
 service elasticsearch start
 service nginx start

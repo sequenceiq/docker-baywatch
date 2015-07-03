@@ -11,7 +11,7 @@ RUN apt-get update
 RUN apt-get -y install elasticsearch=1.1.1
 #RUN echo "script.disable_dynamic: true" >> /etc/elasticsearch/elasticsearch.yml
 ADD es/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
-RUN mkdir -p /es-data && chmod 777 /es-data
+RUN mkdir -p /es-data
 
 #Workaround regarding ulimit privileges
 RUN sed -i.bak '/MAX_OPEN_FILES" ]; then/,+4 s/^/#/' /etc/init.d/elasticsearch
